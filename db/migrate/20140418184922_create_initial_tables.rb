@@ -15,7 +15,6 @@ class CreateInitialTables < ActiveRecord::Migration
         create_table :cardsets do |t|
           t.string :name
           t.string :short, limit: 50
-          t.date :released
 
           t.timestamps
         end

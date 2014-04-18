@@ -52,7 +52,6 @@ ActiveRecord::Schema.define(version: 20140418184922) do
   create_table "cardsets", force: true do |t|
     t.string   "name"
     t.string   "short",      limit: 50
-    t.date     "released"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

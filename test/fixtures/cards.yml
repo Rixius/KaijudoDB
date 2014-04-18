@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  power: 1
+  cost: 1
+  flavor: MyString
+  art: MyString
+  illustrator: MyString
+  type: 1
+
+two:
+  name: MyString
+  power: 1
+  cost: 1
+  flavor: MyString
+  art: MyString
+  illustrator: MyString
+  type: 1

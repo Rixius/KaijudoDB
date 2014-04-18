@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Civ.create([
+    {name: 'Light', icon: ''},
+    {name: 'Water', icon: ''},
+    {name: 'Darkness', icon: ''},
+    {name: 'Fire', icon: ''},
+    {name: 'Nature', icon: ''}
+])

@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20140418184922) do
 
   create_table "cards", force: true do |t|
     t.string   "name"
+    t.string   "slug"
     t.integer  "power"
     t.integer  "cost"
     t.string   "flavor"

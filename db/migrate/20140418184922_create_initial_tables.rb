@@ -28,6 +28,7 @@ class CreateInitialTables < ActiveRecord::Migration
 
         create_table :cards do |t|
           t.string :name
+          t.string :slug
           t.integer :power
           t.integer :cost
           t.string :flavor

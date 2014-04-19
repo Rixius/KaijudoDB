@@ -93,15 +93,15 @@ sets = {
     :ga1 => {name: 'Quest for the Gauntlet', short: '13GA1'}
 }
 abilities = {
-    :blocker => {},
-    :protector => {},
-    :double_breaker => {},
-    :triple_breaker => {},
-    :shield_blast => {},
-    :fast_attack => {},
-    :powerful_attack_1000 => {},
-    :slayer => {},
-    :skirmisher => {}
+    #:blocker => {},
+    #:protector => {},
+    :double_breaker => {name: 'Double Breaker', text: '(This creature breaks 2 shields.)', icon: ''},
+    :triple_breaker => {name: 'Triple Breaker', text: '(This creature breaks 3 shields.)', icon: ''},
+    #:shield_blast => {},
+    :fast_attack => {name: 'Fast Attack', text: '(This creature can attack on the turn it enters the battle zone.)', icon: ''},
+    #:powerful_attack_1000 => {},
+    :slayer => {name: 'Slayer', text: '(When this creature loses a battle, banish the other creature.)', icon: ''},
+    :skirmisher => {name: 'Skirmisher', text: '(This creature can attack only creatures.)', icon: ''}
 }
 
 Civ.create(civs.map do |k,v| v end).each do |civ|
@@ -113,22 +113,32 @@ end
 Cardset.create(sets.map do |k,v| v end).each do |cardset|
     sets[cardset.short.downcase.gsub(/^[0-9]+/, '').to_sym] = cardset
 end
+Ability.create(abilities.map do |k,v| v end).each do |ability|
+    abilities[ability.name.downcase.gsub(' ','_').to_sym] = ability
+end
+
 
 #__END__
 demobugforce = Card.create name: 'Demo, the Megaenforcertoid',
     slug: 'demo_the_megaenforcertoid',
     power: 11500,
-    cost: 12,
-    flavor: 'Something or other',
-    illustrator: 'Someone'
+    cost: 12
 
-demobugforce.type = Card.types[:creature]
+demobugforce.ctype = Card.ctypes[:creature]
 demobugforce.races << races[:enforcer]
 demobugforce.races << races[:megabug]
 demobugforce.races << races[:human]
 demobugforce.civs << civs[:light]
 demobugforce.civs << civs[:nature]
+demobugforce.abilities << abilities[:double_breaker]
+demobugforce.abilities << abilities[:fast_attack]
+
 demobugforce.save
+
+Printing.create([
+    {card: demobugforce, cardset: sets[:sha], rarity: 5, flavor:  'Something or other', art: 'http://placekitten.com/100/300', illustrator: 'Someone', number: 'S5'},
+    {card: demobugforce, cardset: sets[:tri], rarity: 5, flavor:  'Something or other', art: 'http://placekitten.com/100/300', illustrator: 'Someone', number: 'S5'}
+])
 
 pp demobugforce
 pp demobugforce.races

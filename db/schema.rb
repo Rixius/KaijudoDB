@@ -21,22 +21,19 @@ ActiveRecord::Schema.define(version: 20140418184922) do
     t.datetime "updated_at"
   end
 
+  create_table "abilities_cards", force: true do |t|
+    t.integer "card_id"
+    t.integer "ability_id"
+  end
+
   create_table "cards", force: true do |t|
     t.string   "name"
     t.string   "slug"
     t.integer  "power"
     t.integer  "cost"
-    t.string   "flavor"
-    t.string   "art"
-    t.string   "illustrator"
-    t.integer  "type"
+    t.integer  "ctype"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "cards_abilities", force: true do |t|
-    t.integer "card_id"
-    t.integer "ability_id"
   end
 
   create_table "cards_civs", force: true do |t|
@@ -67,7 +64,10 @@ ActiveRecord::Schema.define(version: 20140418184922) do
     t.integer  "card_id"
     t.integer  "cardset_id"
     t.integer  "rarity"
-    t.string   "number",     limit: 25
+    t.string   "flavor"
+    t.string   "art"
+    t.string   "illustrator"
+    t.string   "number",      limit: 25
     t.datetime "created_at"
     t.datetime "updated_at"
   end

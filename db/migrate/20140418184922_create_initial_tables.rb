@@ -30,10 +30,7 @@ class CreateInitialTables < ActiveRecord::Migration
           t.string :slug
           t.integer :power
           t.integer :cost
-          t.string :flavor
-          t.string :art
-          t.string :illustrator
-          t.integer :type
+          t.integer :ctype
 
           t.timestamps
         end
@@ -46,7 +43,7 @@ class CreateInitialTables < ActiveRecord::Migration
             t.belongs_to :card
             t.belongs_to :race
         end
-        create_table :cards_abilities do |t|
+        create_table :abilities_cards do |t|
             t.belongs_to :card
             t.belongs_to :ability
         end
@@ -55,6 +52,9 @@ class CreateInitialTables < ActiveRecord::Migration
           t.belongs_to :card
           t.belongs_to :cardset
           t.integer :rarity
+          t.string :flavor
+          t.string :art
+          t.string :illustrator
           t.string :number, limit: 25
 
           t.timestamps

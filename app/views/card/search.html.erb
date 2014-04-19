@@ -1,0 +1,9 @@
+<pre>
+<%= pp @query.to_sql %>
+<%= @query.length %>
+</pre>
+<ul>
+    <% @query.each do |card| %>
+        <li><%= card.name %></li>
+    <% end %>
+</ul>

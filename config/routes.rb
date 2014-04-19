@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'card' => 'card#index'
   get 'card/show/:slug' => 'card#show'
   get 'card/search'
 

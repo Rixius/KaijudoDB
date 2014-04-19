@@ -142,10 +142,15 @@ set.each do |path|
             if ! Card.find_by_name(card['name'])
                 card_hash = {
                     name: card['name'],
+                    slug: card['name'].downcase.gsub(' ','_'),
                     cost: Integer(card.xpath("property[@name='Level']").first['value']),
                     ctype: Card.ctypes[card.xpath("property[@name='Type']").first['value'].split.first.downcase.to_sym],
                     civs: card.xpath("property[@name='Civilization']").first['value'].split(" / ").map do |civ|
-                        civs[civ.downcase.to_sym]
+                        out = civs[civ.downcase.to_sym]
+                        puts civ if ! out
+                        puts card['name'] if ! out
+                        puts path if ! out
+                        out
                     end,
                     abilities: [],
                 }

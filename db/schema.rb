@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20140418184922) do
 
   create_table "abilities", force: true do |t|
     t.string   "name",       limit: 100
+    t.string   "reminder"
     t.string   "text"
     t.string   "icon",       limit: 100
     t.datetime "created_at"

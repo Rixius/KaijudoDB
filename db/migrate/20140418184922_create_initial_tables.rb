@@ -2,6 +2,7 @@ class CreateInitialTables < ActiveRecord::Migration
     def change
         create_table :abilities do |t|
           t.string :name, limit: 100
+          t.string :reminder
           t.string :text
           t.string :icon, limit: 100
 

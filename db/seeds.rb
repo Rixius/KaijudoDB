@@ -80,18 +80,18 @@ races = {
     :mystic             => {name: 'Mystic'}
 }
 sets = {
-    :tvr => {name: 'Tatsurion vs. Razorkinder Battle Decks', short: '1TVR'},
-    :ded => {name: 'The Dojo Edition', short: '2DED'},
-    :ris => {name: 'Rise of the Duel Masters', short: '3RIS'},
+    :tvr => {name: 'Battle Decks: Tatsurion vs Razorkinder', short: '1TVR'},
     :evo => {name: 'Evo Fury', short: '4EVO'},
-    :dra => {name: 'Dragon Master Collection Kit', short: '5DRA'},
-    :dsi => {name: 'DragonStrike Infernus', short: '6DSI'},
-    :cla => {name: 'Clash of the Duel Masters', short: '7CLA'},
-    :tri => {name: 'Triple Strike', short: '8TRI'},
-    :sha => {name: 'Shattered Alliances', short: '9SHA'},
     :inv => {name: 'Invasion Earth', short: '10INV'},
-    :bbr => {name: 'Booster Brawl', short: '11BBR'},
+    :ris => {name: 'Rise of the Duel Masters', short: '3RIS'},
+    :dsi => {name: 'DragonStrike Infernus', short: '6DSI'},
     :mys => {name: 'The 5 Mystics', short: '12MYS'},
+    :tri => {name: 'Elite Series - Triple Strike', short: '8TRI'},
+    :cla => {name: 'Clash of the Duel Masters', short: '7CLA'},
+    :ded => {name: 'Dojo Edition', short: '2DED'},
+    :sha => {name: 'Shattered Alliances', short: '9SHA'},
+    :dra => {name: 'Dragon Master Collection Kit', short: '5DRA'},
+    :bbr => {name: 'Booster Brawl', short: '11BBR'},
     :ga1 => {name: 'Quest for the Gauntlet', short: '13GA1'},
     :prm1 => {name: 'Year 1 Promos', short: 'Y1PRM'},
     :prm2 => {name: 'Year 2 Promos', short: 'Y2PRM'}
@@ -168,7 +168,8 @@ set.each do |path|
                 card.xpath('property[@name="Rules"]').first['value'].split("\r\n").each do |ability|
                     matches = abilityregex.match ability
                     if matches && matches['name']
-                        if dbability = Ability.find_by_name(matches['name'])
+                        dbability = Ability.where('name LIKE ?', matches['name']).where('reminder LIKE ?', matches['reminder']).limit(1).first
+                        if !dbability.nil?
                             card_hash[:abilities] << dbability
                         else
                             card_hash[:abilities] << Ability.create(name: matches['name'],
@@ -192,108 +193,37 @@ Card.create(cards.map do |k,v| v end).each do |card|
     cards[card.name.downcase.gsub(' ','_').to_sym] = card
 end
 
-
-__END__
-cards = {}
-
-cards[:terror_pit] = Card.new name: 'Terror Pit',
-    slug: 'terror_pit',
-    cost: 7,
-    ctype: Card.ctypes[:spell],
-    civs: [civs[:darkness]],
-    abilities: [
-        abilities[:shield_blast],
-        Ability.create(text: 'Banish target enemy creature')
-    ]
-
-cards[:blaze_belcher] = Card.new name: 'Blaze Belcher',
-    slug: 'blaze_belcher',
-    cost: 1,
-    power: 1000,
-    ctype: Card.ctypes[:creature],
-    civs: [civs[:fire]],
-    races: [races[:burn_belly]],
-    abilities: [
-        Ability.create(name: 'Hungry!',
-            text: 'This creature attacks each turn if able.')
-    ]
-
-cards[:root_trap] = Card.new name: 'Root Trap',
-    slug: 'root_trap',
-    cost: 7,
-    ctype: Card.ctypes[:spell],
-    civs: [civs[:nature]],
-    abilities: [
-        abilities[:shield_blast],
-        Ability.create(text: 'Put target enemy creature from the battle zone into your opponent\'s mana zone')
-    ]
-
-cards[:tornado_flame] = Card.new name: 'Tornado Flame',
-    slug: 'tornado_flame',
-    cost: 5,
-    ctype: Card.ctypes[:spell],
-    civs: [civs[:flame]],
-    abilities: [
-        abilities[:shield_blast],
-        Ability.create(text: 'Banish target enemy creature that has power 5000 or less.')
-    ]
-
-cards[:rock_bite] = Card.new name: 'Rock Bite',
-    slug: 'rock_bite',
-    cost: 4,
-    ctype: Card.ctypes[:spell],
-    civs: [civs[:flame]],
-    abilities: [
-        abilities[:shield_blast],
-        Ability.create(text: 'Banish target enemy creature that has power 3000 or less.')
-    ]
-
-cards[:spy_mission] = Card.new name: 'Spy Mission',
-    slug: 'spy_mission',
-    cost: 4,
-    civs: [civs[:water]],
-    abilities: [
-        abilities[:shield_blast],
-        Ability.create(text: 'Draw 2 cards.')
-    ]
-
-cards[:skeeter_swarmer] = Card.new name: 'Skeeter Swarmer',
-    slug: 'skeeter_swarmer',
-    cost: 2,
-    power: 4000,
-    ctype: Card.ctypes[:creature],
-    civs: [civs[:darkness]],
-    abilities: [
-        abilities[:blocker],
-        abilities[:guard],
-        Ability.new(name: 'Angry Swarm',
-            text: 'When this creature wins a battle, banish it.')
-    ]
-
-
-
-cards.sort.each do |k,v|
-    v.save
+set.each do |path|
+    File.open(path, 'r') do |file|
+        xml = Nokogiri::XML(file.read)
+        set_information = {
+            name: xml.xpath('set').first['name'],
+            id: xml.xpath('set').first['id']
+        }
+        set_information[:record] = Cardset.find_by_name set_information[:name]
+        xml.xpath('set/cards/card').each do |card|
+            card_record = Card.find_by_name card['name']
+            printing = Printing.new cardset: set_information[:record]
+            printing.card = card_record
+            printing.art = "/images/#{set_information[:id]}/#{card['id']}.png"
+            case card.xpath('property[@name="Rarity"]').first['value']
+            when "Common"
+                printing.rarity = 1
+            when "Uncommon"
+                printing.rarity = 2
+            when "Rare"
+                printing.rarity = 3
+            when "Very Rare"
+                printing.rarity = 4
+            when "Super Rare"
+                printing.rarity = 5
+            when "Promo"
+                printing.rarity = 5
+            when "11BBR"
+                printing.cardset = Cardset.find_by_short '11BBR'
+                printing.rarity = 5
+            end
+            printing.save
+        end
+    end
 end
-pp cards
-
-demobugforce = Card.create name: 'Demo, the Megaenforcertoid',
-    slug: 'demo_the_megaenforcertoid',
-    power: 11500,
-    cost: 12
-
-demobugforce.ctype = Card.ctypes[:creature]
-demobugforce.races << races[:enforcer]
-demobugforce.races << races[:megabug]
-demobugforce.races << races[:human]
-demobugforce.civs << civs[:light]
-demobugforce.civs << civs[:nature]
-demobugforce.abilities << abilities[:double_breaker]
-demobugforce.abilities << abilities[:fast_attack]
-
-demobugforce.save
-
-Printing.create([
-    {card: demobugforce, cardset: sets[:sha], rarity: 5, flavor:  'Something or other', art: 'http://placekitten.com/100/300', illustrator: 'Someone', number: 'S5'},
-    {card: demobugforce, cardset: sets[:tri], rarity: 5, flavor:  'Something or other', art: 'http://placekitten.com/100/300', illustrator: 'Someone', number: 'S5'}
-])

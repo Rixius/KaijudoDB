@@ -1,21 +1,21 @@
 class CreateInitialTables < ActiveRecord::Migration
     def change
         create_table :abilities do |t|
-          t.string :name, limit: 100
+          t.string :name
           t.string :reminder
           t.string :text
-          t.string :icon, limit: 100
+          t.string :icon
 
           t.timestamps
         end
         create_table :races do |t|
-          t.string :name, limit: 30
+          t.string :name
 
           t.timestamps
         end
         create_table :cardsets do |t|
           t.string :name
-          t.string :short, limit: 50
+          t.string :short
 
           t.timestamps
         end
@@ -56,7 +56,7 @@ class CreateInitialTables < ActiveRecord::Migration
           t.string :flavor
           t.string :art
           t.string :illustrator
-          t.string :number, limit: 25
+          t.string :number
 
           t.timestamps
         end

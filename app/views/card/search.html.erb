@@ -1,3 +1,15 @@
+<% if Rails.env == 'development' %>
+    <div class="panel">
+        <div class="panel-heading">
+            <div class="h3">Development Information</div>
+        </div>
+        <div class="panel-body">
+            <pre>
+<%= @queryobject.query.to_sql %>
+            </pre>
+        </div>
+    </div>
+<% end %>
 <% @cards.each do |card| %>
     <%= render partial: 'show.html.erb', locals: {card: card} %>
 <% end %>

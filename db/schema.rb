@@ -13,11 +13,14 @@
 
 ActiveRecord::Schema.define(version: 20140424022810) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "abilities", force: true do |t|
-    t.string   "name",       limit: 100
+    t.string   "name"
     t.string   "reminder"
-    t.text     "text",       limit: 255
-    t.string   "icon",       limit: 100
+    t.text     "text"
+    t.string   "icon"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -49,7 +52,7 @@ ActiveRecord::Schema.define(version: 20140424022810) do
 
   create_table "cardsets", force: true do |t|
     t.string   "name"
-    t.string   "short",      limit: 50
+    t.string   "short"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -68,13 +71,13 @@ ActiveRecord::Schema.define(version: 20140424022810) do
     t.string   "flavor"
     t.string   "art"
     t.string   "illustrator"
-    t.string   "number",      limit: 25
+    t.string   "number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "races", force: true do |t|
-    t.string   "name",       limit: 30
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -94,7 +97,7 @@ ActiveRecord::Schema.define(version: 20140424022810) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

@@ -44,7 +44,7 @@ class CardController < ApplicationController
                         @query = @query.where("#{part[1]} #{part[2]} ?", Integer(part[3]))
                     end
                 else
-                    @query = @query.where('cards.name LIKE ?', "%"+part+"%")
+                    @query = @query.where('cards.name ILIKE ?', "%"+part+"%")
                 end
             end
             self
@@ -54,7 +54,7 @@ class CardController < ApplicationController
             @query = @query
             .joins(:printings)
             .joins(:printings => :cardset)
-            .where("cardsets.name LIKE ? OR cardsets.short LIKE ?", "%#{part.last}%", "%#{part.last}%")
+            .where("cardsets.name ILIKE ? OR cardsets.short ILIKE ?", "%#{part.last}%", "%#{part.last}%")
         end
         def rarity part
             @query = @query
@@ -64,7 +64,7 @@ class CardController < ApplicationController
         def race part
             @query = @query
             .joins(:races)
-            .where('races.name LIKE ?', "%#{part.last}%")
+            .where('races.name ILIKE ?', "%#{part.last}%")
         end
         def civ! part
             return civmulti!(part) if part.last.match(/[mM]$/)

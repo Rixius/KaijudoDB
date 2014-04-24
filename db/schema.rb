@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140423173700) do
+ActiveRecord::Schema.define(version: 20140424022810) do
 
   create_table "abilities", force: true do |t|
     t.string   "name",       limit: 100
     t.string   "reminder"
-    t.string   "text"
+    t.text     "text",       limit: 255
     t.string   "icon",       limit: 100
     t.datetime "created_at"
     t.datetime "updated_at"

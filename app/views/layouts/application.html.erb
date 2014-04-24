@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Kaijudotest</title>
+<title>Kaijudo DB</title>
 <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
 <%= csrf_meta_tags %>
 </head>
@@ -16,7 +16,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Project name</a>
+                <a class="navbar-brand" href="/">Kaijudo DB</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -36,6 +36,11 @@
                         </ul>
                     </li>
                 </ul>
+                <form class="navbar-form navbar-left" role="search" action="<%= search_card_path %>" method="get">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="q" placeholder="Search"<% if params[:q] %> value="<%= params[:q] %>"<% end %>>
+                    </div>
+                </form>
                 <ul class="nav navbar-nav navbar-right">
                     <% if user_signed_in? %>
                     <li class="dropdown">
@@ -52,6 +57,7 @@
                     </li>
                     <% else %>
                     <li><a href="<%= new_user_session_path %>">Sign In</a>
+                    <li><a href="<%= new_user_registration_path %>">Sign Up</a>
                     <% end %>
                 </ul>
             </div><!--/.nav-collapse -->

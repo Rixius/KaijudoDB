@@ -1,9 +1,3 @@
-<pre>
-<%= pp @query.to_sql %>
-<%= @query.length %>
-</pre>
-<ul>
-    <% @query.each do |card| %>
-        <li><%= card.name %></li>
-    <% end %>
-</ul>
+<% @cards.each do |card| %>
+    <%= render partial: 'show.html.erb', locals: {card: card} %>
+<% end %>

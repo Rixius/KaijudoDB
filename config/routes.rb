@@ -1,13 +1,18 @@
 Rails.application.routes.draw do
+  root to: 'static#index'
+  get 'about' => 'static#about'
+  get 'contact' => 'static#contact'
+
   devise_for :users
   devise_scope :user do
       get 'users/sign_out' => 'devise/sessions#destroy'
   end
 
-  root to: 'card#index'
-  get 'card' => 'card#index'
-  get 'card/show/:slug' => 'card#show'
-  get 'card/search'
+  resource 'card' do
+      root to: 'card#list'
+      get 'show/:slug' => 'card#show'
+      get 'search' => 'card#search'
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

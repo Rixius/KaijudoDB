@@ -1,0 +1,38 @@
+<hgroup>
+    <h1>Kaijudo DB</h1>
+    <h3>May All Your Shields Be Blasts!</h4>
+</hgroup>
+<p>Some example searchs:</p>
+<ul>
+    <li>
+        <a href="<%= search_card_path(q: 'Blinder Beetle') %>">Blinder Beedle &mdash; All Cards with 'Blinder Beetle' in their name</a>
+    </li>
+    <li>
+        <a href="<%= search_card_path(q: 'civ:WN') %>">civ:WN &mdash; All cards with Water or Nature in them</a>
+    </li>
+    <li>
+        <a href="<%= search_card_path(q: 'civ!WN') %>">civ!LF &mdash; Cards with only Light or Fire in them</a>
+    </li>
+    <li>
+        <a href="<%= search_card_path(q: 'civ!DNFm') %>">civ!DNFm &mdash; Multi-Civ cards with only Darkness, Nature, or Fire in them</a>
+    </li>
+    <li>
+        <a href="<%= search_card_path(q: 'power>5000') %>">power>5000 &mdash; Cards with higher than 5000 power</a>
+    </li>
+    <li>
+        <a href="<%= search_card_path(q: 'race:enforcer') %>">race:enforcer &mdash; All Enforcers</a>
+    </li>
+    <li>
+        <a href="<%= search_card_path(q: 'race:Dragon') %>">race:Dragon &mdash; All dragons, Celestial, Armored, Et Cetera</a>
+    </li>
+    <li>
+        <a href="<%= search_card_path(q: 'race:"Rot Worm"') %>">race:"Rot Worm" &mdash; All Rot Worms</a>
+    </li>
+    <li>
+        <a href="<%= search_card_path(q: 'race:"Rot Worm"') %>">race:"Rot Worm" &mdash; All Rot Worms</a>
+    </li>
+    <li>
+        <a href="<%= search_card_path(q: 'race:corrupted civ!WNL') %>">race:corrupted civ!WNL &mdash; Combined, increases the power. All Corrupteds that are only of the Water, Nature, or Light Civilazations.</a>
+    </li>
+
+</ul>

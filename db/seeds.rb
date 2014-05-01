@@ -222,6 +222,8 @@ set.each do |path|
             when "11BBR"
                 printing.cardset = Cardset.find_by_short '11BBR'
                 printing.rarity = 5
+            else
+                printing.rarity = 5
             end
             if set_information[:record]
                 printing.save

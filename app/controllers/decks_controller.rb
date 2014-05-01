@@ -69,6 +69,7 @@ class DecksController < ApplicationController
   # GET /decks/scope/1.json
   def scope
     session[:current_deck] = params[:deck_id]
+    session[:current_deck] = nil if params[:deck_id] == '0'
     respond_to do |format|
       format.html { redirect_back_or_default }
       format.json { head :no_content }

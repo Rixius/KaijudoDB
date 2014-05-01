@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :decks
+
   root to: 'static#index'
   get 'about' => 'static#about'
   get 'contact' => 'static#contact'

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :decks
+  resources :decks do
+    get 'scope/', to: 'decks#scope', as: 'scope'
+  end
 
   root to: 'static#index'
   get 'about' => 'static#about'

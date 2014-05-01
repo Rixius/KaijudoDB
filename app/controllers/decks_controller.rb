@@ -26,6 +26,8 @@ class DecksController < ApplicationController
   # POST /decks.json
   def create
     @deck = Deck.new(deck_params)
+    @deck.user = current_user
+    @deck.active = true
 
     respond_to do |format|
       if @deck.save
@@ -43,6 +45,7 @@ class DecksController < ApplicationController
   def update
     respond_to do |format|
       if @deck.update(deck_params)
+        puts @deck.inspect
         format.html { redirect_to @deck, notice: 'Deck was successfully updated.' }
         format.json { render :show, status: :ok, location: @deck }
       else
@@ -62,6 +65,16 @@ class DecksController < ApplicationController
     end
   end
 
+  # GET /decks/scope/1
+  # GET /decks/scope/1.json
+  def scope
+    session[:current_deck] = params[:deck_id]
+    respond_to do |format|
+      format.html { redirect_back_or_default }
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_deck
@@ -70,6 +83,6 @@ class DecksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def deck_params
-      params.require(:deck).permit(:name, :description, :public, :active)
+      params.require(:deck).permit(:name, :description, :public, :format)
     end
 end

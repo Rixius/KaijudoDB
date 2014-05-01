@@ -20,12 +20,15 @@
     <%= f.text_area :description %>
   </div>
   <div class="field">
-    <%= f.label :public %><br>
-    <%= f.check_box :public %>
+    <%= f.label :format %><br>
+    <%= f.select :format, options_for_select(
+        Deck.formats,
+        @deck.format
+    ), include_blank: true %>
   </div>
   <div class="field">
-    <%= f.label :active %><br>
-    <%= f.check_box :active %>
+    <%= f.label :public %><br>
+    <%= f.check_box :public %>
   </div>
   <div class="actions">
     <%= f.submit %>

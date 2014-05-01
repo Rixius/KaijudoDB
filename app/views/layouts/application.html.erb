@@ -4,6 +4,7 @@
 <title>Kaijudo DB</title>
 <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
 <%= stylesheet_link_tag    'bootstrap.min.css', media: 'all' %>
+<%= stylesheet_link_tag    'styles.css', media: 'all' %>
 <%= csrf_meta_tags %>
 </head>
 <body>
@@ -38,8 +39,8 @@
                             <li><a href="#">Manage Decks</a></li>
                             <li class="divider"></li>
                             <li class="dropdown-header">Modify Deck lists</li>
-                            <% if current_user and current_user.decks.each do |deck| %>
-                                <li><a href=""><%= deck.name %></a></li>
+                            <% if user_signed_in? and current_user.decks.each do |deck| %>
+                                <li><a href="<%= deck_path deck %>"><%= deck.name %></a></li>
                             <% end %>
                             <% else %>
                             <li class="dropdown-header">No decks found</li>
@@ -80,7 +81,42 @@
         <p class="alery"><%= alert %></p>
         <%= yield %>
 
+        <div class="push"></div>
     </div> <!-- /container -->
+    <div id="footer" class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <% if user_signed_in? %>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Deck Management <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <% Deck.formats.each do |format| %>
+                                    <li class="dropdown-header">
+                                        <%= format.first %>
+                                    </li>
+                                    <% current_user.decks.each do |deck| %>
+                                        <% if deck.format == format.last %>
+                                            <li><%= link_to deck.name, deck_scope_path(deck_id: deck.id) %></li>
+                                        <% end %>
+                                    <% end %>
+                                    <li class="divider"></li>
+                                <% end %>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p class="nav navbar-text">
+                        <% if is_managing_deck? %>
+                            Currently managing: <%= current_deck.name %>
+                        <% else %>
+                            Not currently managing any deck.
+                        <% end %>
+                    </p>
+                <% end %>
+                <p class="nav navbar-right navbar-text">&copy; 2014 Stephen Middleton</p>
+            </div>
+        </div>
+    </div>
 
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'bootstrap.min.js' %>

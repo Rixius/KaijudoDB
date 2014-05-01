@@ -1,19 +1,19 @@
 <div class="row">
-    <div class="col-xs-4">
+    <div class="col-xs-12 col-sm-4">
         <% if card.printings.length > 0 %>
         <%= image_tag card.printings.first.art %>
         <% end %>
     </div>
-    <div class="col-xs-8">
+    <div class="col-xs-12 col-sm-8">
         <table cellspacing="0" class="table table-striped">
             <tbody>
                 <tr>
-                    <th class="col-xs-3">Name</th>
-                    <td class="col-xs-9"><%= card.name %></td>
+                    <th class="col-sm-3">Name</th>
+                    <td class="col-sm-9"><%= card.name %></td>
                 </tr>
                 <tr>
-                    <th class="col-xs-3">Civilizations</th>
-                    <td class="col-xs-9">
+                    <th class="col-sm-3">Civilizations</th>
+                    <td class="col-sm-9">
                         <ul>
                         <% card.civs.each do |civ| %>
                             <li><%= civ.name %></li>
@@ -22,17 +22,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-xs-3">Cost</th>
-                    <td class="col-xs-9"><%= card.cost %></td>
+                    <th class="col-sm-3">Cost</th>
+                    <td class="col-sm-9"><%= card.cost %></td>
                 </tr>
                 <tr>
-                    <th class="col-xs-3">Type</th>
-                    <td class="col-xs-9"><%= card.ctype.capitalize %></td>
+                    <th class="col-sm-3">Type</th>
+                    <td class="col-sm-9"><%= card.ctype.capitalize %></td>
                 </tr>
                 <% if card.ctype == 'creature' %>
                 <tr>
-                    <th class="col-xs-3">Races</th>
-                    <td class="col-xs-9">
+                    <th class="col-sm-3">Races</th>
+                    <td class="col-sm-9">
                         <ul>
                             <% card.races.each do |race| %>
                                 <li><%= race.name %></li>
@@ -41,13 +41,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-xs-3">Power</th>
-                    <td class="col-xs-9"><%= card.power %></td>
+                    <th class="col-sm-3">Power</th>
+                    <td class="col-sm-9"><%= card.power %></td>
                 </tr>
                 <% end %>
                 <tr>
-                    <th class="col-xs-3">Abilities</th>
-                    <td class="col-xs-9">
+                    <th class="col-sm-3">Abilities</th>
+                    <td class="col-sm-9">
                         <ul>
                             <% card.abilities.each do |ability| %>
                                 <li>
@@ -63,8 +63,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-xs-3">Printings</th>
-                    <td class="col-xs-9">
+                    <th class="col-sm-3">Printings</th>
+                    <td class="col-sm-9">
                         <ul>
                             <% card.printings.each do |printing| %>
                                 <li>

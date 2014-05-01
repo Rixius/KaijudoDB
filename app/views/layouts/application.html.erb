@@ -38,10 +38,10 @@
                             <li><a href="#">Manage Decks</a></li>
                             <li class="divider"></li>
                             <li class="dropdown-header">Modify Deck lists</li>
-                            <% current_user.decks.each do |deck| %>
-                            <li><a href=""><%= deck.name %></a></li>
+                            <% if current_user and current_user.decks.each do |deck| %>
+                                <li><a href=""><%= deck.name %></a></li>
                             <% end %>
-                            <% if current_user.decks.length < 1 %>
+                            <% else %>
                             <li class="dropdown-header">No decks found</li>
                             <% end %>
                         </ul>

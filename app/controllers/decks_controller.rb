@@ -1,6 +1,8 @@
 class DecksController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_deck, only: [:show, :edit, :update, :destroy]
+  before_action :check_ownership, only: [:edit, :update, :destroy, :scope]
+  before_action :check_visibility, only: [:edit, :update, :destroy, :scope, :show]
 
   # GET /decks
   # GET /decks.json
@@ -85,5 +87,18 @@ class DecksController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def deck_params
       params.require(:deck).permit(:name, :description, :public, :format)
+    end
+
+    # Only allow modifications by the owner of the deck
+    def check_ownership
+      if current_user != @deck.user
+        redirect_to root_path, notice: 'You cannot edit someone else\'s deck!'
+      end
+    end
+
+    def check_visibility
+      if !@deck.active or (current_user != @deck.user and !@deck.public)
+        not_found
+      end
     end
 end

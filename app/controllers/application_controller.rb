@@ -4,11 +4,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
-  public
   def redirect_back_or_default(default = root_path, *options)
     tag_options = {}
     options.first.each { |k,v| tag_options[k] = v } unless options.empty?
     redirect_to (request.referer.present? ? :back : default), tag_options
+  end
+
+  def not_found msg="Not Found"
+    raise ActionController::RoutingError.new(msg)
   end
 
   protected

@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   end
 
   resource 'card' do
-      root to: 'card#list'
-      get 'show/:slug' => 'card#show'
-      get 'search' => 'card#search'
+      root to: 'card#list', as: 'index'
+      get 'show/:slug', to: 'card#show', as: ''
+      get 'search', to: 'card#search', as: 'search'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

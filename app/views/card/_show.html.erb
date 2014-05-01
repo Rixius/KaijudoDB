@@ -91,6 +91,22 @@
                         </ul>
                     </td>
                 </tr>
+                <% if is_managing_deck? %>
+                <tr>
+                    <th class="col-sm-3">Current Deck</th>
+                    <td class="col-sm-9">
+                        <%= form_for(deck_manage_path(deck_id: current_deck.id, card_id: card.id)) do |f| %>
+                            <div class="btn-group">
+                                <%= f.submit("0", class: 'btn btn-default') %>
+                                <%= f.submit("1", class: 'btn btn-default') %>
+                                <%= f.submit("2", class: 'btn btn-default') %>
+                                <%= f.submit("3", class: 'btn btn-default') %>
+
+                            </div>
+                        <% end %>
+                    </td>
+                </tr>
+                <% end %>
             </tbody>
         </table>
     </div>

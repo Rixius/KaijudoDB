@@ -67,8 +67,8 @@ class DecksController < ApplicationController
     end
   end
 
-  # GET /decks/scope/1
-  # GET /decks/scope/1.json
+  # GET /decks/1/scope
+  # GET /decks/1/scope.json
   def scope
     session[:current_deck] = params[:deck_id]
     session[:current_deck] = nil if params[:deck_id] == '0'
@@ -76,6 +76,11 @@ class DecksController < ApplicationController
       format.html { redirect_back_or_default }
       format.json { head :no_content }
     end
+  end
+
+  #POST /decks/1/manage/123/2
+  #POST /decks/1/manage/123/2.json
+  def manage
   end
 
   private

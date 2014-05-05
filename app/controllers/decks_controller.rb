@@ -1,8 +1,8 @@
 class DecksController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
-  before_action :set_deck, only: [:show, :edit, :update, :destroy]
-  before_action :check_ownership, only: [:edit, :update, :destroy, :scope]
-  before_action :check_visibility, only: [:edit, :update, :destroy, :scope, :show]
+  before_action :set_deck, only: [:show, :edit, :update, :destroy, :scope, :manage]
+  before_action :check_ownership, only: [:edit, :update, :destroy, :scope, :manage]
+  before_action :check_visibility, only: [:edit, :update, :destroy, :scope, :show, :manage]
 
   # GET /decks
   # GET /decks.json
@@ -78,9 +78,23 @@ class DecksController < ApplicationController
     end
   end
 
-  #POST /decks/1/manage/123/2
-  #POST /decks/1/manage/123/2.json
+  #POST /decks/1/manage
+  #POST /decks/1/manage.json
   def manage
+    @card = Card.find(params[:card_id])
+    @deck_card = DeckCard.where('deck_id = ?', @deck.id).where('card_id = ?', params[:card_id]).first
+
+    if !@deck_card
+      @deck_card = DeckCard.new deck: @deck,
+        card: @card
+    end
+    @deck_card.amount = params[:commit]
+    @deck_card.save
+
+    respond_to do |format|
+      format.html { redirect_back_or_default }
+      format.json { head :no_content }
+    end
   end
 
   private

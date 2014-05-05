@@ -11,6 +11,5 @@
     </div>
 <% end %>
 <% @cards.each do |card| %>
-    <%= render partial: 'show.html.erb', locals: {card: card, search: true} %>
-    <hr>
+    <%= render partial: 'card_show.html.erb', locals: {card: card, search: true} %>
 <% end %>

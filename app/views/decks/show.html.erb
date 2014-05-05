@@ -1,24 +1,28 @@
-<p id="notice"><%= notice %></p>
-
 <p>
-  <strong>Name:</strong>
-  <%= @deck.name %>
+    <%= link_to 'Edit', edit_deck_path(@deck) %> |
+    <%= link_to 'Back', decks_path %>
 </p>
+<div class="row">
+    <strong class="col-xs-2">Name:</strong>
+    <p class="col-xs-10">
+        <%= @deck.name %>
+    </p>
+</div>
+<div class="row">
+    <strong class="col-xs-2">Description:</strong>
+    <p class="col-xs-10">
+        <%= @deck.description %>
+    </p>
+</div>
+<div class="row">
+    <strong class="col-xs-2">Public:</strong>
+    <p class="col-xs-10">
+        <%= @deck.public %>
+    </p>
+</div>
+<% @deck.deck_cards.each do |deck_card| %>
+    <% if deck_card.amount > 0 %>
+        <%= render partial: 'card_show.html.erb', locals: {card: deck_card.card, search: true} %>
+    <% end %>
+<% end %>
 
-<p>
-  <strong>Description:</strong>
-  <%= @deck.description %>
-</p>
-
-<p>
-  <strong>Public:</strong>
-  <%= @deck.public %>
-</p>
-
-<p>
-  <strong>Active:</strong>
-  <%= @deck.active %>
-</p>
-
-<%= link_to 'Edit', edit_deck_path(@deck) %> |
-<%= link_to 'Back', decks_path %>

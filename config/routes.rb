@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
+  post '/decks/:id/manage', to: 'decks#manage', as: 'deck_manage'
+  get '/decks/:id/scope', to: 'decks#scope', as: 'deck_scope'
   resources :decks do
-    get 'scope', to: 'decks#scope', as: 'scope'
-    post 'manage/:card_id', to: 'decks#manage', as: 'manage'
   end
 
   root to: 'static#index'

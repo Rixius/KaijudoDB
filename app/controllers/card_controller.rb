@@ -2,16 +2,16 @@ class CardController < ApplicationController
     class QueryParser
         attr :query, :parts
         CivMap = {
-            'L' => 'Light',
-            'W' => 'Water',
-            'D' => 'Darkness',
-            'F' => 'Fire',
-            'N' => 'Nature'
+            'l' => 'Light',
+            'w' => 'Water',
+            'd' => 'Darkness',
+            'f' => 'Fire',
+            'n' => 'Nature'
         }
 
         def initialize query
             @query = Card.order('name')
-            @parts = query.gsub(/"(\w+) (\w+)"/, '"\1☃\2"').split.each do |part|
+            @parts = query.downcase.gsub(/"(\w+) (\w+)"/, '"\1☃\2"').split.each do |part|
                 part.gsub!(/"(\w+)☃(\w+)"/, '\1 \2')
             end
         end
@@ -70,7 +70,7 @@ class CardController < ApplicationController
             return civmulti!(part) if part.last.match(/[mM]$/)
             parts = {}
             part.last.gsub(/[mM]/, '').split('').map do |civshort|
-                parts[civshort.upcase] = CivMap[civshort.upcase]
+                parts[civshort] = CivMap[civshort]
             end
             parts = (CivMap.values - parts.values).map do |v|
                 Civ.find_by_name v
@@ -85,7 +85,7 @@ class CardController < ApplicationController
         def civmulti! part
             parts = {}
             part.last.gsub(/[mM]/, '').split('').map do |civshort|
-                parts[civshort.upcase] = CivMap[civshort.upcase]
+                parts[civshort] = CivMap[civshort]
             end
             @query = @query.where('cards.id IN (SELECT card_id FROM cards_civs WHERE civ_id NOT IN (?) GROUP BY card_id HAVING count(card_id) > 1)', (CivMap.values - parts.values).map do |v|
                 Civ.find_by_name v

@@ -7,7 +7,11 @@ class DecksController < ApplicationController
   # GET /decks
   # GET /decks.json
   def index
-    @decks = Deck.all
+    if user_signed_in?
+      @decks = Deck.where('active = true').where('public = true OR user_id = ?', current_user.id)
+    else
+      @decks = Deck.where('active = true').where('public = true')
+    end
   end
 
   # GET /decks/1

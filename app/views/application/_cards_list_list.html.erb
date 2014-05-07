@@ -1,0 +1,34 @@
+<table cellspacing="0" class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Civilazations</th>
+            <th>Cost</th>
+            <th>Type</th>
+            <th>Rarity</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% cards.each do |card| %>
+            <tr>
+                <td><%= card.name %></td>
+                <td><%= card.civs.map do |civ|
+                        civ.name
+                    end.join ' / '
+                    %>
+                </td>
+                <td><%= card.cost %></td>
+                <td>
+                    <%= card.ctype.capitalize %>
+                    <% if card.ctype != 'spell' %>
+                        &mdash;
+                        <%= card.races.map(&:name).join(' / ') %>
+                        &mdash;
+                        <%= card.power %>
+                    <% end %>
+                </td>
+                <td><% card.printings.first.rarity.times do %>*<% end %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

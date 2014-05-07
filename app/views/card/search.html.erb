@@ -10,6 +10,4 @@
         </div>
     </div>
 <% end %>
-<% @cards.each do |card| %>
-    <%= render partial: 'card_show.html.erb', locals: {card: card, search: true} %>
-<% end %>
+<%= render partial: "cards_#{current_card_format}_list.html.erb", locals: {cards: @cards, search: true} %>

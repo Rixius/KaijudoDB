@@ -1,0 +1,113 @@
+<div class="row card">
+    <div class="col-xs-12 col-md-4">
+        <% if card.printings.length > 0 %>
+            <% if search %>
+                <%= link_to image_tag(card.printings.first.art), card_path(slug: card.slug) %>
+            <% else %>
+                <%= image_tag(card.printings.first.art) %>
+            <% end %>
+        <% end %>
+    </div>
+    <div class="col-xs-12 col-md-8">
+        <table cellspacing="0" class="table table-striped">
+            <tbody>
+                <tr>
+                    <th class="col-sm-3">Name</th>
+                    <td class="col-sm-9">
+                        <% if search %>
+                            <%= link_to card.name, card_path(slug: card.slug) %>
+                        <% else %>
+                            <%= card.name %>
+                        <% end %>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-3">Civilizations</th>
+                    <td class="col-sm-9">
+                        <ul>
+                        <% card.civs.each do |civ| %>
+                            <li><%= civ.name %></li>
+                        <% end %>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-3">Cost</th>
+                    <td class="col-sm-9"><%= card.cost %></td>
+                </tr>
+                <tr>
+                    <th class="col-sm-3">Type</th>
+                    <td class="col-sm-9"><%= card.ctype.capitalize %></td>
+                </tr>
+                <% if card.ctype == 'creature' %>
+                <tr>
+                    <th class="col-sm-3">Races</th>
+                    <td class="col-sm-9">
+                        <ul>
+                            <% card.races.each do |race| %>
+                                <li><%= race.name %></li>
+                            <% end %>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-3">Power</th>
+                    <td class="col-sm-9"><%= card.power %></td>
+                </tr>
+                <% end %>
+                <tr>
+                    <th class="col-sm-3">Abilities</th>
+                    <td class="col-sm-9">
+                        <ul>
+                            <% card.abilities.each do |ability| %>
+                                <li>
+                                <strong><%= ability.name %></strong>
+                                <%= ability.reminder %>
+                                <% if ability.text %>
+                                    &mdash;
+                                    <span><%= ability.text %></span>
+                                <% end %>
+                                </li>
+                            <% end %>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-3">Printings</th>
+                    <td class="col-sm-9">
+                        <ul>
+                            <% card.printings.each do |printing| %>
+                                <li>
+                                <strong>
+                                    <%= printing.cardset.name %>
+                                    (<% printing.rarity.times do %>
+                                        *
+                                     <% end %>)
+                                </strong>
+                                &mdash;
+                                <span><%= printing.number %></span>
+                                </li>
+                            <% end %>
+                        </ul>
+                    </td>
+                </tr>
+                <% if is_managing_deck? %>
+                <tr>
+                    <th class="col-sm-3">Current Deck</th>
+                    <td class="col-sm-9">
+                        <%= form_tag(deck_manage_path(id: current_deck.id)) do |f| %>
+                            <%= hidden_field_tag('card_id', card.id) %>
+                            <div class="btn-group">
+                                <%= submit_tag("0",  current_deck_card_count(0, card)) %>
+                                <%= submit_tag("1",  current_deck_card_count(1, card)) %>
+                                <%= submit_tag("2",  current_deck_card_count(2, card)) %>
+                                <%= submit_tag("3",  current_deck_card_count(3, card)) %>
+                            </div>
+                        <% end %>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>

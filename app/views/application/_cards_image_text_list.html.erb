@@ -1,0 +1,3 @@
+<% cards.each do |card| %>
+    <%= render partial: 'cards_image_text_show.html.erb', locals: {card: card, search: search} %>
+<% end %>

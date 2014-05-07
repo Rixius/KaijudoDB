@@ -1,8 +1,8 @@
 class DecksController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
-  before_action :set_deck, only: [:show, :edit, :update, :destroy, :scope, :manage]
-  before_action :check_ownership, only: [:edit, :update, :destroy, :scope, :manage]
-  before_action :check_visibility, only: [:edit, :update, :destroy, :scope, :show, :manage]
+  before_action :set_deck, only: [:show, :edit, :update, :destroy, :manage]
+  before_action :check_ownership, only: [:edit, :update, :destroy, :manage]
+  before_action :check_visibility, only: [:edit, :update, :destroy, :show, :manage]
 
   # GET /decks
   # GET /decks.json
@@ -74,8 +74,8 @@ class DecksController < ApplicationController
   # GET /decks/1/scope
   # GET /decks/1/scope.json
   def scope
-    session[:current_deck] = params[:deck_id]
-    session[:current_deck] = nil if params[:deck_id] == '0'
+    session[:current_deck] = params[:id]
+    session[:current_deck] = nil if params[:id] == '0'
     respond_to do |format|
       format.html { redirect_back_or_default }
       format.json { head :no_content }

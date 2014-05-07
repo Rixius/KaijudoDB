@@ -11,3 +11,7 @@ body > .container {
 }
 #footer, .push {
 }
+.card-image > img,
+.card-image > a > img {
+    width: 100%;
+}

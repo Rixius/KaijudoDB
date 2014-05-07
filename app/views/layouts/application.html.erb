@@ -22,28 +22,22 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li<% if current_page?(root_path) %>
-                        class="active"
-                    <% end %>><a href="<%= root_path %>">Home</a></li>
-                    <li<% if current_page?(about_path) %>
-                        class="active"
-                    <% end %>><a href="<%= about_path %>">About</a></li>
-                    <li<% if current_page?(contact_path) %>
-                        class="active"
-                    <% end %>><a href="<%= contact_path %>">Contact</a></li>
+                    <li<% if current_page?(root_path) %> class="active"<% end %>>
+                        <%= link_to 'Home', root_path %>
+                    </li>
+                    <li<% if current_page?(about_path) %> class="active"<% end %>>
+                        <%= link_to 'About', about_path %>
+                    </li>
+                    <li<% if current_page?(contact_path) %> class="active"<% end %>>
+                        <%= link_to 'Contact', contact_path %>
+                    </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Deck Management <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Decks <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="<%= decks_path %>">Browse Decks</a></li>
+                            <% if user_signed_in? %>
+                            <li><a href="">My Decks</a></li>
                             <li><a href="<%= new_deck_path %>">Create New Deck</a></li>
-                            <li><a href="#">Manage Decks</a></li>
-                            <li class="divider"></li>
-                            <li class="dropdown-header">Modify Deck lists</li>
-                            <% if user_signed_in? and current_user.decks.each do |deck| %>
-                                <li><a href="<%= deck_path deck %>"><%= deck.name %></a></li>
-                            <% end %>
-                            <% else %>
-                            <li class="dropdown-header">No decks found</li>
                             <% end %>
                         </ul>
                     </li>
@@ -86,8 +80,25 @@
     <div id="footer" class="navbar navbar-default navbar-fixed-bottom" role="navigation">
         <div class="container">
             <div class="navbar-collapse collapse">
-                <% if user_signed_in? %>
-                    <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">Card View Mode <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <%= link_to_card_format 'Spolier', 'spoiler' %>
+                            </li>
+                            <li>
+                                <%= link_to_card_format 'List', 'list' %>
+                            </li>
+                            <li>
+                                <%= link_to_card_format 'Scans only', 'image' %>
+                            </li>
+                            <li>
+                                <%= link_to_card_format 'Cards with Scans', 'image_text' %>
+                            </li>
+                        </ul>
+                    </li>
+                    <% if user_signed_in? %>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Deck Management <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -105,7 +116,9 @@
                                 <li><%= link_to "Cancel Management", deck_scope_path(id: 0) %></li>
                             </ul>
                         </li>
-                    </ul>
+                    <% end %>
+                </ul>
+                <% if user_signed_in? %>
                     <p class="nav navbar-text">
                         <% if is_managing_deck? %>
                             Currently managing: <%= current_deck.name %>

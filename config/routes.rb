@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       get 'search', to: 'card#search', as: 'search'
   end
 
+  get 'config/show/:format', to: 'card#show_format', as: 'card_format'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

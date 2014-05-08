@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'about' => 'static#about'
   get 'contact' => 'static#contact'
 
+  get 'user/:username', to: 'user#show', as: 'user_show'
+
   devise_for :users
   devise_scope :user do
       get 'users/sign_out' => 'devise/sessions#destroy'

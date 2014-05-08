@@ -1,0 +1,6 @@
+<div class="row">
+    <div class="col-xs-1">
+        <%= image_tag(gravatar_url(@user.email)) %>
+    </div>
+    <h1 class="col-xs-11"><%= @user.username.capitalize %></h1>
+</div>

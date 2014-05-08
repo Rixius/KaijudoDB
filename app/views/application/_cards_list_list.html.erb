@@ -14,7 +14,7 @@
     <tbody>
         <% cards.each do |card| %>
             <tr>
-                <td><%= card.name %></td>
+                <td><%= link_to card.name, card_path(slug: card.slug) %></td>
                 <td><%= card.civs.map do |civ|
                         civ.name
                     end.join ' / '
